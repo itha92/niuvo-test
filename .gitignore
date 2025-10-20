@@ -1,0 +1,29 @@
+# macOS
+.DS_Store
+
+# Node/Frontend
+node_modules/
+dist/
+.tmp/
+.angular/
+.next/
+out/
+coverage/
+*.log
+
+# Angular build outputs (generic)
+**/dist/
+**/.angular/
+
+# Next.js
+**/.next/
+**/out/
+
+# .NET
+**/bin/
+**/obj/
+*.user
+*.suo
+
+# Docker
+**/.dockerignore
