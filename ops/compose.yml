@@ -1,0 +1,62 @@
+
+services:
+  proxy:
+    image: nginx:1.27-alpine
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ../certs:/certs:ro
+    ports:
+      - "443:443"
+    depends_on:
+      - api
+      - next
+      - angular1
+      - angular2
+    networks:
+      - devnet
+
+  api:
+    build:
+      context: ../backend-dotnet/api
+    environment:
+      - ASPNETCORE_URLS=http://+:8080
+      - ASPNETCORE_FORWARDEDHEADERS_ENABLED=true
+      - ASPNETCORE_PATHBASE=/api     # if you kept /api in Nginx
+    expose:
+      - "8080"
+    networks:
+      - devnet
+
+  next:
+    build:
+      context: ../frontend-nextjs
+    environment:
+      - PORT=3000
+    expose:
+      - "3000"
+    networks:
+      - devnet
+
+  angular1:
+    build:
+      context: ../frontend-angular1/angular1
+    environment:
+      - PORT=4201
+    expose:
+      - "4201"
+    networks:
+      - devnet
+
+  angular2:
+    build:
+      context: ../frontend-angular2/angular2
+    environment:
+      - PORT=4202
+    expose:
+      - "4202"
+    networks:
+      - devnet
+
+networks:
+  devnet:
+    driver: bridge
