@@ -10,14 +10,13 @@ dist/
 out/
 coverage/
 *.log
-
-# Angular build outputs (generic)
 **/dist/
 **/.angular/
-
-# Next.js
 **/.next/
 **/out/
+
+# Angular cache
+.angular/cache/
 
 # .NET
 **/bin/

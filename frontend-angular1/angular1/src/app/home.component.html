@@ -1,0 +1,24 @@
+<main style="max-width: 680px; margin: 3rem auto; padding: 1rem;">
+    <h1>Angular User App</h1>
+
+    <ng-container *ngIf="error" >
+      <p style="color:crimson">{{ error }}</p>
+    </ng-container>
+
+    <ng-container *ngIf="me?.authenticated; else notAuth">
+      <p>Welcome, <strong>{{ me?.name }}</strong> <span *ngIf="me?.role">({{ me?.role }})</span></p>
+
+      <p *ngIf="showAdminHeader" style="background:#f3f3f3;padding:.5rem;border-radius:.5rem;">
+        Admin: <strong>{{ me?.name }}</strong>
+      </p>
+
+      <p><a href="/">← Go Back to Home</a></p>
+
+      <button (click)="doLogout()">Logout</button>
+    </ng-container>
+
+    <ng-template #notAuth>
+      <p>You are not signed in.</p>
+      <p><a href="/">Go to Hub</a></p>
+    </ng-template>
+  </main>

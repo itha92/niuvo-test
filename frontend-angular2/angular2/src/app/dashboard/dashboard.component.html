@@ -1,0 +1,20 @@
+<main style="max-width: 800px; margin: 3rem auto; padding: 1rem;">
+    <h1>Admin Dashboard</h1>
+
+    <p *ngIf="me?.authenticated">Signed in as <strong>{{ me?.name }}</strong> ({{ me?.role }})</p>
+    <p *ngIf="error" style="color:crimson">{{ error }}</p>
+
+    <section *ngIf="apps?.length; else none">
+      <h3>Applications</h3>
+      <ul>
+        <li *ngFor="let app of apps; let i = index">
+          <strong>{{ app.applicant }}</strong> — {{ app.status }}
+          <a style="margin-left:8px" [href]="linkToAngular1(i)">Open in Angular1 →</a>
+        </li>
+      </ul>
+    </section>
+    <ng-template #none><p>No applications.</p></ng-template>
+
+    <p style="margin-top:16px"><a href="/">← Back to Hub</a></p>
+    <button (click)="doLogout()" style="margin-top:8px">Logout</button>
+  </main>
