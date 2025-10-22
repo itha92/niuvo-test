@@ -297,3 +297,29 @@ docker compose -f ops/compose.yml logs angular2 -f --tail=100
 # Curl with forced DNS resolution (bypass cache)
 curl -I --resolve dev.localhost.test:443:127.0.0.1 https://dev.localhost.test/
 ```
+
+
+## Pending Items
+- **Lock it down** – Re-verify cookie flags (`HttpOnly; Secure; SameSite=Lax; Path=/`), respect forwarded headers, add basic security headers (CSP/X-Content-Type-Options), and ensure `/api` is `Cache-Control: no-store`.
+
+- **Make it sturdy** – Add Redis for session backing in prod (if needed), keep API stateless beyond the cookie ticket, and wire health checks at the edge + API.
+
+- **CI/CD basics** – CI pipeline that builds/lints/tests all apps and a couple of dev shortcuts (`make up/down/logs` or npm scripts).
+
+- **Docs polish** – Finalize README (diagram, mkcert steps, one-command run, creds, flows, troubleshooting) and add a solid `.gitignore`.
+
+- **E2E proof** – Manual acceptance script plus a small Playwright e2e covering both flows (Next → Angular1, Angular2 → Angular1).
+
+- **Prod scaffolding** – Azure path-based routing mirroring dev, Cloudflare DNS+TLS, cache only static FE assets, bypass `/api/*`, enable HSTS in prod.
+
+- **Config hygiene** – Env vars for cookie/session/Redis; no secrets in repo; document local vs. prod settings.
+
+- **Nice touches** – Simple `/health` pages for FE, structured API logs (request IDs), friendly 404/500 pages.
+
+## Suggestions to Improve
+- **E2E stability & speed** – Add Playwright tests to CI against a docker-compose env; implement a logging tools for  failures for fast debugging.
+
+- **Infra as Code** – Check in Azure resources as Bicep/Terraform; include Cloudflare rules as code for repeatable deploys.
+
+- **Observability** – Add basic tracing/log correlation (request-id headers), and ship logs to a single sink (e.g., Application Insights) for easy triage.
+
